@@ -3,8 +3,10 @@
  *
  * Wider than the theme contract's `PageIndex` on purpose: a search engine
  * returns the entries core handed it inside its results, and core reads
- * `mtime` and `hash` off them. Treat the cache and gating fields as opaque
- * (pass them through unchanged; do not build entries by hand).
+ * `mtime` and `hash` off them. Treat `hash` as opaque (pass entries through
+ * unchanged; do not build them by hand). Fields no plugin reads (role gating,
+ * publish windows, redirect and term-page markers, cover image) are not
+ * declared; core's entries carry them anyway.
  *
  * @module
  */
@@ -35,24 +37,10 @@ export interface PageIndex {
   depth: number;
   parentPath: string | null;
   taxonomy: Record<string, string[]>;
-  /** `publish_date` as epoch ms, when set and valid. */
-  publishAt?: number;
-  /** `unpublish_date` as epoch ms, when set and valid. */
-  unpublishAt?: number;
-  /** True when the page is role-gated. Opaque: pass through. */
-  gated?: boolean;
-  /** Raw `frontmatter.roles` when gated. Opaque: pass through. */
-  roles?: unknown;
   /** File modification time, for cache invalidation. Opaque: pass through. */
   mtime: number;
   /** Hash of the frontmatter, for change detection. Opaque: pass through. */
   hash: string;
-  /** URL path to the cover image, derived from `frontmatter.image`. */
-  coverImage?: string;
-  /** When set, visiting the route redirects to this URL (a media file). */
-  fileUrl?: string;
-  /** Taxonomy term this page is the term page for, normalised to `{ vocab: value }`. */
-  termPageFor?: Record<string, string>;
   /** Site-declared custom frontmatter fields extracted for facet filtering. */
   extra?: Record<string, string | string[]>;
 }

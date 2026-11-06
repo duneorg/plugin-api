@@ -58,3 +58,12 @@ Slice 2b (the plugin object, hooks, capabilities and the runtime):
 
 Out of the contract on purpose: `imageCache`, `engine.getAvailableThemes`,
 `rebuildCount`, `indexErrors`, `resolve`, `serveMedia`.
+
+Trimmed to what plugins read (measured against the first-party plugins and the
+testing harness): `User` no longer declares `avatarUrl`, `providerId`,
+`linkedProviders`, `lastSeenAt` or `stripeCustomerId`, and `UserStore` no longer
+declares `getByProvider`, `linkProvider` or `unlinkProvider`. `PageIndex` no
+longer declares `gated`, `roles`, `publishAt`, `unpublishAt`, `fileUrl`,
+`termPageFor` or `coverImage`; it keeps `mtime` and `hash` (required by core's
+search-result type; treat `hash` as opaque) and `extra` (read by the Meilisearch
+plugin). Core's own types carry the omitted fields.
