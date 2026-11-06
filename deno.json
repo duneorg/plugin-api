@@ -1,0 +1,12 @@
+{
+  "name": "@dune/plugin-api",
+  "version": "1.0.0",
+  "license": "MIT",
+  "exports": { ".": "./src/mod.ts" },
+  "minimumDependencyAge": { "age": "P1D" },
+  "tasks": {
+    "test": "deno test --allow-env tests/",
+    "check": "deno fmt --check && deno lint && deno check src/**/*.ts"
+  },
+  "lint": { "rules": { "tags": ["recommended"] } }
+}
