@@ -6,7 +6,6 @@
  * @module
  */
 
-import type { StorageAdapter } from "./storage.ts";
 import type { PageFrontmatter } from "./page-index.ts";
 import type { Scheduler, StagingEngine, WorkflowEngine } from "./engines.ts";
 import type { SessionManager, UserStore } from "./identity.ts";

@@ -34,5 +34,27 @@ Slice 2a (services and what they return):
 - `HistoryEngine`, `RecordInput`, `ContentRevision`, `ContentDiff`;
   `RateLimiter`, `RateLimitStore`, `Logger` and the security option types.
 
-Still to come: `DunePlugin`, `PluginApi`, `MountApi`, `HookRegistry` and the
-hook events, `PluginRuntime`, `PluginServices`, the capability types.
+Slice 2b (the plugin object, hooks, capabilities and the runtime):
+
+- `DunePlugin`, `PluginApi`, `MountApi`, `HookRegistry`, `HookContext`,
+  `HookHandler`, `HookEvent` and the event payloads, `ResponseTransformContext`,
+  `ContentEditorPlugin`, `PublicRouteRegistration` and the admin registrations
+  (`AdminPageRegistration`, `AdminRouteRegistration`, `AdminBarAction`,
+  `AdminBarActionContext`). `HookHandler`, `setup`, `mount` and
+  `transformResponse` are bivariant: core hands handlers a wider context than
+  this package declares.
+- Capabilities: `Capabilities` (slots), `Contributions`, `CapabilityContext`,
+  `CapabilityFactory`, `CapabilityRegistrar`, `CapabilityReader`,
+  `CapabilityProvider`, `RequestAuthenticator`, `ScheduledActionExecutor`.
+- A narrow `DuneConfig` (`site`, `system.content.dir`, `system.languages`,
+  `system.debug`, `theme.name`, `plugins`); `admin` config is not part of it.
+- `AuthzRelation` and a structural `PluginAuthz` (`check`, `allow`,
+  `disallowAllMatching`).
+- `PluginRuntime` with narrow structural interfaces for what plugins call:
+  `PluginEngine`, `RouteResolver`, `ThemeLoader`, `Page`, `PluginSearch`,
+  `FlexEngine`, `SubmissionManager`, `SectionRegistry`, `MetricsCollector`,
+  `JobScheduler`. `PluginEngine.switchTheme` does not persist the choice; the
+  caller writes the config.
+
+Out of the contract on purpose: `imageCache`, `engine.getAvailableThemes`,
+`rebuildCount`, `indexErrors`, `resolve`, `serveMedia`.

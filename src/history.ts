@@ -4,8 +4,6 @@
  * @module
  */
 
-import type { ContentStatus } from "./workflow.ts";
-
 /** Records page revisions and provides diff and restore capabilities. Obtain via {@link createHistoryEngine}. */
 export interface HistoryEngine {
   /** Record a new revision for a page */
