@@ -19,9 +19,22 @@ export interface User {
   /**
    * External identity provider this account was originally created with:
    * "local" (password) | "github" | "google" | "discord" | "magic" | ...
-   * This is the account's original signup method.
+   * Unlike `linkedProviders` below, this one is not removable through the
+   * account-linking flow — it's the account's original signup method.
    */
   provider: string;
+  /** Provider's user ID (for OAuth). */
+  providerId?: string;
+  /**
+   * Additional OAuth identities linked to this account after signup, via
+   * `GET /auth/{provider}/link` (requires an existing session). Each entry
+   * is independently usable to log in — `getByProvider()` checks both this
+   * list and the primary `provider`/`providerId` pair. Unlike the primary
+   * pair, entries here can be removed via `POST /auth/{provider}/unlink`.
+   *
+   * @since 0.32.1
+   */
+  linkedProviders?: { provider: string; providerId: string }[];
   /** Roles/tags, e.g. ["admin"], ["member", "subscriber"]. */
   roles: string[];
   createdAt: number; // ms timestamp
@@ -43,8 +56,30 @@ export interface UserStore {
   getById(id: string): Promise<User | null>;
   getByEmail(email: string): Promise<User | null>;
   getByUsername(username: string): Promise<User | null>;
+  /** Checks both the primary provider/providerId pair and linkedProviders. */
+  getByProvider(provider: string, providerId: string): Promise<User | null>;
   /** @throws {DuplicateEmailError} if a user with this email already exists. */
   create(user: UserCreate): Promise<User>;
+  /**
+   * Add an OAuth identity to `linkedProviders`. Caller is responsible for
+   * checking `getByProvider()` first — this is a pure data operation, not a
+   * policy decision (that lives in the route handler, which decides what
+   * "already claimed elsewhere" should mean). No-op (returns the user
+   * unchanged) if this exact (provider, providerId) pair is already present,
+   * whether as the primary pair or an existing linked entry.
+   */
+  linkProvider(
+    id: string,
+    provider: string,
+    providerId: string,
+  ): Promise<User | null>;
+  /**
+   * Remove a linked OAuth identity by provider name. Only removes entries in
+   * `linkedProviders` — the primary `provider`/`providerId` pair (the
+   * account's original signup method) is never touched here. No-op if no
+   * matching entry exists.
+   */
+  unlinkProvider(id: string, provider: string): Promise<User | null>;
   /** @throws {DuplicateEmailError} if `updates.email` is set and already used by a different user. */
   update(
     id: string,
