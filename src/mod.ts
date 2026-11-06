@@ -119,6 +119,7 @@ export type {
   ThemeConfig,
 } from "./config.ts";
 export type {
+  AdminPrefix,
   AuthenticateResult,
   Capabilities,
   CapabilityContext,

@@ -65,8 +65,20 @@ export interface ScheduledActionExecutor {
   execute(action: ScheduledAction): Promise<void>;
 }
 
+/**
+ * Where the admin is mounted. Core never assumes an admin exists or where it
+ * is: it reads this slot to keep admin routes out of the page cache, the static
+ * build and the plugin-route namespace. No provider means no admin.
+ */
+export interface AdminPrefix {
+  /** URL path prefix the admin is mounted at: starts with `/`, no trailing slash (e.g. `/admin`). */
+  readonly prefix: string;
+}
+
 /** Slots: at most one active provider each. First-party keys only in 1.0. */
 export interface Capabilities {
+  /** Where the admin is mounted. */
+  "admin.prefix": AdminPrefix;
   /** Who is the admin on this request. */
   "auth.session": RequestAuthenticator;
   /** Executes due scheduled actions. */

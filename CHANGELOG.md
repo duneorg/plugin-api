@@ -68,3 +68,7 @@ first-party plugin uses them yet: an OAuth login provider is built from them.
 `fileUrl`, `termPageFor` or `coverImage`; it keeps `mtime` and `hash` (required
 by core's search-result type; treat `hash` as opaque) and `extra` (read by the
 Meilisearch plugin). Core's own types carry the omitted fields.
+
+Slot added: `admin.prefix` (`AdminPrefix { readonly prefix: string }`), where
+the admin is mounted. The admin provides it; core reads it instead of assuming
+`/admin`. With no provider there is no admin.
