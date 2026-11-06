@@ -132,3 +132,46 @@ export interface BlueprintFieldValidation {
    */
   pattern?: string;
 }
+
+/**
+ * A blueprint definition — the schema for a template's frontmatter.
+ * Loaded from `blueprints/{template}.yaml`.
+ */
+export interface BlueprintDefinition {
+  /** Human-readable name for this content type (e.g. "Blog Post"). */
+  title: string;
+  /**
+   * Parent blueprint to inherit fields from.
+   * Must match another blueprint filename (without .yaml extension).
+   * @example "default"
+   */
+  extends?: string;
+  /**
+   * Field definitions.  Keys are frontmatter field names.
+   * @example { date: { type: "date", required: true } }
+   */
+  fields: Record<string, BlueprintField>;
+}
+
+/**
+ * Resolved blueprint — inheritance fully flattened.
+ * `fields` is the merged union of all inherited + own fields.
+ */
+export interface ResolvedBlueprint {
+  title: string;
+  /** Template name this blueprint applies to. */
+  template: string;
+  /** Fully merged fields (inherited overrides → own fields). */
+  fields: Record<string, BlueprintField>;
+}
+
+/** Map of template name → blueprint definition (as loaded, before resolution). */
+export type BlueprintMap = Record<string, BlueprintDefinition>;
+
+/** A single validation error from validating frontmatter against a blueprint. */
+export interface BlueprintValidationError {
+  /** Frontmatter field name. */
+  field: string;
+  /** Human-readable error message. */
+  message: string;
+}

@@ -56,3 +56,17 @@ export interface PageIndex {
   /** Site-declared custom frontmatter fields extracted for facet filtering. */
   extra?: Record<string, string | string[]>;
 }
+
+/**
+ * Frontmatter of a page. Only the fields the plugin contract itself relies on
+ * are named; any other field is allowed (`[key: string]: unknown`). The full
+ * catalogue of standard fields is in `@dune/theme-api`'s `PageFrontmatter`.
+ */
+export interface PageFrontmatter {
+  title: string;
+  template?: string;
+  published?: boolean;
+  date?: string;
+  taxonomy?: Record<string, string[]>;
+  [key: string]: unknown;
+}

@@ -33,7 +33,11 @@ export type {
   DocumentPresence,
   InlineEditManager,
 } from "./inline-edit.ts";
-export type { ContentFormat, PageIndex } from "./page-index.ts";
+export type {
+  ContentFormat,
+  PageFrontmatter,
+  PageIndex,
+} from "./page-index.ts";
 export type {
   FacetCounts,
   InjectedSearchRecord,
@@ -50,5 +54,59 @@ export type {
   StorageStat,
   WatchEvent,
 } from "./storage.ts";
-export type { ScheduledAction } from "./workflow.ts";
+export type {
+  ContentStatus,
+  ScheduledAction,
+  WorkflowStage,
+  WorkflowTransition,
+} from "./workflow.ts";
 export { type DuneErrorCode, isDuneError } from "./errors.ts";
+export type {
+  ContentDiff,
+  ContentRevision,
+  HistoryEngine,
+  RecordInput,
+} from "./history.ts";
+export type {
+  Scheduler,
+  StagedDraft,
+  StagingEngine,
+  UpsertInput,
+  WorkflowEngine,
+} from "./engines.ts";
+export type {
+  Session,
+  SessionManager,
+  User,
+  UserCreate,
+  UserStore,
+} from "./identity.ts";
+export type {
+  ClientIpOptions,
+  Logger,
+  PasswordCheckResult,
+  RateLimiter,
+  RateLimitStore,
+  SanitizeOptions,
+  SsrfCheckOptions,
+} from "./security.ts";
+export type {
+  BlueprintDefinition,
+  BlueprintMap,
+  BlueprintValidationError,
+  ResolvedBlueprint,
+} from "./blueprints.ts";
+export type {
+  AuthzService,
+  BlueprintService,
+  EngineServices,
+  PasswordService,
+  PathServices,
+  PluginServices,
+  RateLimitService,
+  SearchAnalyticsSummary,
+  SearchServices,
+  SecurityService,
+  SessionService,
+  UserService,
+} from "./services.ts";
