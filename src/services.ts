@@ -88,12 +88,14 @@ export interface PasswordService {
   readonly dummyHash: string;
 }
 
-/** Admin-tier access tuples (the authz system itself is created by bootstrap). */
+/** Access tuples on the site (`app:site`); the authz system itself is created by core. */
 export interface AuthzService {
   /**
-   * Make sure every given user holds the tuple for their admin-tier role.
-   * Idempotent. A no-op when the site has no authz system (admin disabled, or
-   * `admin.authz_store` is not local).
+   * Make sure every given user holds the relation for their admin-tier role on
+   * the site (`app:site`, the object `pages.update` and the other site-wide
+   * actions are checked on). Idempotent. A no-op when the site has no authz
+   * system (core creates one when a plugin provides `auth.session` or declares
+   * `authzActions`, or the site has a login).
    */
   seedAdminTuples(users: Array<{ id: string; role: string }>): Promise<void>;
 }
