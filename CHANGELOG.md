@@ -79,3 +79,8 @@ Meilisearch plugin). Core's own types carry the omitted fields.
 Slot added: `admin.prefix` (`AdminPrefix { readonly prefix: string }`), where
 the admin is mounted. The admin provides it; core reads it instead of assuming
 `/admin`. With no provider there is no admin.
+
+- `InlineEditManager` gains `handleRequest(req, { editor, path, pageFrontmatter })` and loses
+  `commit` / `patchFields`; `EditorIdentity` and `InlineEditRequestContext` are declared. Page-event
+  payloads (`onPageMove`'s `PageMovePayload`, and the others by documentation) carry an optional
+  `actor`.
