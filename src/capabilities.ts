@@ -13,12 +13,6 @@
  * @module
  */
 
-import type { AdminBarAction, AdminBarActionContext } from "./hooks.ts";
-import type {
-  AdminPageRegistration,
-  AdminRouteRegistration,
-  ContentEditorPlugin,
-} from "./hooks.ts";
 import type { DuneConfig } from "./config.ts";
 import type { HistoryEngine } from "./history.ts";
 import type { HookRegistry } from "./hooks.ts";
@@ -75,7 +69,25 @@ export interface AdminPrefix {
   readonly prefix: string;
 }
 
-/** Slots: at most one active provider each. First-party keys only in 1.0. */
+/**
+ * Slots: at most one active provider each. What core itself consumes, or what
+ * every plugin may rely on.
+ *
+ * Open to declaration merging. A plugin that offers an extension point of its
+ * own declares the key next to its types, so this contract does not grow with
+ * every plugin's features:
+ *
+ * ```ts
+ * declare module "@dune/plugin-api" {
+ *   interface Capabilities { "admin.editor": ContentEditorPlugin }
+ * }
+ * ```
+ *
+ * The rule: **a key is prefixed with the name of the plugin that consumes it**
+ * (`admin.*` is the admin's, `bar.*` plugin-inline-edit's). Unprefixed
+ * namespaces (`editor`, `scheduler`, `admin.prefix`) belong to core, and core
+ * never reads a key it did not declare.
+ */
 export interface Capabilities {
   /** Where the admin is mounted. */
   "admin.prefix": AdminPrefix;
@@ -85,19 +97,15 @@ export interface Capabilities {
   "scheduler.executor": ScheduledActionExecutor;
   /** Real-time inline editing. */
   "editor.inline": InlineEditManager;
-  /** A replacement page editor. */
-  "editor.content": ContentEditorPlugin;
 }
 
-/** Contribution points: one item from each contributing plugin. */
-export interface Contributions {
-  /** An extra admin page. */
-  "admin.pages": AdminPageRegistration;
-  /** A guarded admin route under the admin prefix. */
-  "admin.routes": AdminRouteRegistration;
-  /** Buttons for the admin bar. */
-  "bar.actions": (ctx: AdminBarActionContext) => AdminBarAction[];
-}
+/**
+ * Contribution points: one item from each contributing plugin. Open to
+ * declaration merging under the same rule as {@link Capabilities}. The contract
+ * declares none: every point belongs to the plugin that reads it.
+ */
+// deno-lint-ignore no-empty-interface
+export interface Contributions {}
 
 /** What a slot factory receives: core infrastructure that exists once every `setup()` has settled. */
 export interface CapabilityContext {
