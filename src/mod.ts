@@ -31,7 +31,9 @@ export type {
 export type {
   ActiveEditor,
   DocumentPresence,
+  EditorIdentity,
   InlineEditManager,
+  InlineEditRequestContext,
 } from "./inline-edit.ts";
 export type {
   ContentFormat,

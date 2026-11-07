@@ -61,9 +61,18 @@ export type HookEvent =
   | "onFormSubmit"
   | "onSystemAction";
 
-/** Payload of `onPageMove`: pages were renamed, renumbered or reordered. */
+/**
+ * Payload of `onPageMove`: pages were renamed, renumbered or reordered.
+ *
+ * The other page events carry `actor?: string` the same way: `onPageCreate`
+ * `{ sourcePath, title, actor? }`, `onPageUpdate` and `onPageDelete`
+ * `{ sourcePath, actor? }`. Whoever writes the page fires the event and fills
+ * `actor` when a person is behind the write.
+ */
 export interface PageMovePayload {
   moves: Array<{ from: string; to: string }>;
+  /** Who did it (the user's name or id), when a person did; absent for CLI and automated writes. */
+  actor?: string;
 }
 
 /** Payload of `onFormSubmit`: a public form submission was accepted and stored. */
