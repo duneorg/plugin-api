@@ -94,7 +94,7 @@ export interface AuthzService {
    * Make sure every given user holds the relation for their admin-tier role on
    * the site (`app:site`, the object `pages.update` and the other site-wide
    * actions are checked on). Idempotent. A no-op when the site has no authz
-   * system (core creates one when a plugin provides `auth.session` or declares
+   * system (core creates one when a plugin provides `editor.session` or declares
    * `authzActions`, or the site has a login).
    */
   seedAdminTuples(users: Array<{ id: string; role: string }>): Promise<void>;

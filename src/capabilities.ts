@@ -80,11 +80,11 @@ export interface Capabilities {
   /** Where the admin is mounted. */
   "admin.prefix": AdminPrefix;
   /** Who is the admin on this request. */
-  "auth.session": RequestAuthenticator;
+  "editor.session": RequestAuthenticator;
   /** Executes due scheduled actions. */
   "scheduler.executor": ScheduledActionExecutor;
   /** Real-time inline editing. */
-  "inline-edit": InlineEditManager;
+  "editor.inline": InlineEditManager;
   /** A replacement page editor. */
   "editor.content": ContentEditorPlugin;
 }

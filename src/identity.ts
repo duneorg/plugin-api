@@ -1,5 +1,5 @@
 /**
- * Identity: users, sessions and password helpers, the pieces an `auth.session` provider builds local login from.
+ * Identity: users, sessions and password helpers, the pieces an `editor.session` provider builds local login from.
  *
  * @module
  */

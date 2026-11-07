@@ -24,7 +24,7 @@ Slice 2a (services and what they return):
 - `PluginServices` and its parts: `SecurityService`, `RateLimitService`,
   `PasswordService`, `AuthzService`, `BlueprintService`, `SearchServices`,
   `PathServices`, `SessionService`, `UserService`, `EngineServices`.
-- Identity, in the contract because any `auth.session` provider builds local
+- Identity, in the contract because any `editor.session` provider builds local
   login from it: `User`, `UserCreate`, `UserStore`, `Session`, `SessionManager`,
   `PasswordService`.
 - `EngineServices` is `workflow`, `scheduler` and `staging` (`WorkflowEngine`,
