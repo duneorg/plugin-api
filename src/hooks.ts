@@ -238,7 +238,7 @@ export interface ResponseTransformContext {
   /**
    * What plugins provide, as `MountApi.capabilities` offers it: slots such as
    * `get("admin.prefix")` and any extension point a plugin declares, such as
-   * `list("bar.actions")`. Read per request, so a plugin module shared between
+   * `list(BAR_ACTIONS)`. Read per request, so a plugin module shared between
    * sites keeps no state of its own.
    */
   capabilities: import("./capabilities.ts").CapabilityReader;

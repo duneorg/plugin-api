@@ -8,7 +8,9 @@
  *
  * Two shapes: a **slot** has at most one active provider
  * ({@link Capabilities}); a **contribution point** collects one item from each
- * contributing plugin ({@link Contributions}).
+ * contributing plugin. A plugin that other plugins can extend declares its own
+ * keys as typed tokens ({@link CapabilityKey}, made with {@link capabilityKey}),
+ * not by module augmentation, which JSR does not accept in a published package.
  *
  * @module
  */
@@ -70,23 +72,9 @@ export interface AdminPrefix {
 }
 
 /**
- * Slots: at most one active provider each. What core itself consumes, or what
- * every plugin may rely on.
- *
- * Open to declaration merging. A plugin that offers an extension point of its
- * own declares the key next to its types, so this contract does not grow with
- * every plugin's features:
- *
- * ```ts
- * declare module "@dune/plugin-api" {
- *   interface Capabilities { "admin.editor": ContentEditorPlugin }
- * }
- * ```
- *
- * The rule: **a key is prefixed with the name of the plugin that consumes it**
- * (`admin.*` is the admin's, `bar.*` plugin-inline-edit's). Unprefixed
- * namespaces (`editor`, `scheduler`, `admin.prefix`) belong to core, and core
- * never reads a key it did not declare.
+ * Slots the contract itself consumes: at most one active provider each. The
+ * list is closed. An extension point that belongs to a plugin is a
+ * {@link CapabilityKey} that plugin exports.
  */
 export interface Capabilities {
   /** Where the admin is mounted. */
@@ -95,17 +83,37 @@ export interface Capabilities {
   "editor.session": RequestAuthenticator;
   /** Executes due scheduled actions. */
   "scheduler.executor": ScheduledActionExecutor;
-  /** Real-time inline editing. */
+  /** Real-time inline editing and its HTTP routes. */
   "editor.inline": InlineEditManager;
 }
 
 /**
- * Contribution points: one item from each contributing plugin. Open to
- * declaration merging under the same rule as {@link Capabilities}. The contract
- * declares none: every point belongs to the plugin that reads it.
+ * A typed name for a slot or contribution point that a plugin declares.
+ * Create it once with {@link capabilityKey} and export it:
+ *
+ * ```ts
+ * export const BAR_ACTIONS: CapabilityKey<(ctx: BarActionContext) => BarAction[]> =
+ *   capabilityKey("bar.actions");
+ * // contributor:  api.capabilities.contribute(BAR_ACTIONS, ({ page }) => [...])
+ * // consumer:     capabilities.list(BAR_ACTIONS)
+ * ```
+ *
+ * **Prefix the name with the plugin that consumes it** (`admin.*` is the
+ * admin's, `bar.*` plugin-inline-edit's); unprefixed namespaces belong to the
+ * contract. Two keys with the same name are the same capability at runtime, so
+ * a plugin may recreate another plugin's key from its documented name instead of
+ * importing it.
  */
-// deno-lint-ignore no-empty-interface
-export interface Contributions {}
+export interface CapabilityKey<T> {
+  readonly name: string;
+  /** Phantom: carries `T` for the type checker only. Never set. */
+  readonly __type?: T;
+}
+
+/** Make a {@link CapabilityKey}. */
+export function capabilityKey<T>(name: string): CapabilityKey<T> {
+  return { name };
+}
 
 /** What a slot factory receives: core infrastructure that exists once every `setup()` has settled. */
 export interface CapabilityContext {
@@ -132,10 +140,8 @@ export interface CapabilityRegistrar {
     name: K,
     factory: CapabilityFactory<Capabilities[K]>,
   ): void;
-  contribute<K extends keyof Contributions>(
-    point: K,
-    item: Contributions[K],
-  ): void;
+  provide<T>(key: CapabilityKey<T>, factory: CapabilityFactory<T>): void;
+  contribute<T>(key: CapabilityKey<T>, item: T): void;
 }
 
 /** One entry of {@link CapabilityReader.providers}. */
@@ -152,8 +158,9 @@ export interface CapabilityProvider {
 export interface CapabilityReader {
   /** The active provider of a slot, or undefined. */
   get<K extends keyof Capabilities>(name: K): Capabilities[K] | undefined;
+  get<T>(key: CapabilityKey<T>): T | undefined;
   /** Everything contributed to a point, in plugin registration order. */
-  list<K extends keyof Contributions>(point: K): readonly Contributions[K][];
+  list<T>(key: CapabilityKey<T>): readonly T[];
   /** Who provides what, for `dune doctor`. */
   providers(): CapabilityProvider[];
 }
