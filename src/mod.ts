@@ -1,9 +1,173 @@
 /**
- * @dune/plugin-api: the type contract for Dune plugin authors.
+ * @dune/plugin-api: the contract between Dune and its plugins.
  *
- * Leaf package: it depends on neither `@dune/core` nor the other contract
- * package. Core imports it and type-tests that its own types stay compatible.
+ * A leaf package: it depends on neither `@dune/core` nor `@dune/theme-api`.
+ * Core imports it and type-tests that what it hands a plugin is assignable to
+ * these declarations, and that what a plugin hands in is accepted by core.
  *
  * @module
  */
-export {};
+
+export type { PluginApp, PluginRouteContext } from "./app.ts";
+export type {
+  Submission,
+  SubmissionFile,
+  SubmissionMeta,
+  SubmissionStatus,
+} from "./forms.ts";
+export type {
+  BlueprintField,
+  BlueprintFieldType,
+  BlueprintFieldValidation,
+  BlueprintFileUploadConfig,
+} from "./blueprints.ts";
+export type {
+  ContentApi,
+  ContentSearchResult,
+  PagesOptions,
+  ResolvedPage,
+  TaxonomyTerm,
+} from "./content-api.ts";
+export type {
+  ActiveEditor,
+  DocumentPresence,
+  InlineEditManager,
+} from "./inline-edit.ts";
+export type {
+  ContentFormat,
+  PageFrontmatter,
+  PageIndex,
+} from "./page-index.ts";
+export type {
+  FacetCounts,
+  InjectedSearchRecord,
+  SearchEngine,
+  SearchEngineCreateContext,
+  SearchFilter,
+  SearchOptions,
+  SearchRecordsCollectContext,
+  SearchResult,
+} from "./search.ts";
+export type {
+  StorageAdapter,
+  StorageEntry,
+  StorageStat,
+  WatchEvent,
+} from "./storage.ts";
+export type {
+  ContentStatus,
+  ScheduledAction,
+  WorkflowStage,
+  WorkflowTransition,
+} from "./workflow.ts";
+export { type DuneErrorCode, isDuneError } from "./errors.ts";
+export type {
+  ContentDiff,
+  ContentRevision,
+  HistoryEngine,
+  RecordInput,
+} from "./history.ts";
+export type {
+  Scheduler,
+  StagedDraft,
+  StagingEngine,
+  UpsertInput,
+  WorkflowEngine,
+} from "./engines.ts";
+export type {
+  Session,
+  SessionManager,
+  User,
+  UserCreate,
+  UserStore,
+} from "./identity.ts";
+export type {
+  ClientIpOptions,
+  Logger,
+  PasswordCheckResult,
+  RateLimiter,
+  RateLimitStore,
+  SanitizeOptions,
+  SsrfCheckOptions,
+} from "./security.ts";
+export type {
+  BlueprintDefinition,
+  BlueprintMap,
+  BlueprintValidationError,
+  ResolvedBlueprint,
+} from "./blueprints.ts";
+export type {
+  AuthzService,
+  BlueprintService,
+  EngineServices,
+  PasswordService,
+  PathServices,
+  PluginServices,
+  RateLimitService,
+  SearchAnalyticsSummary,
+  SearchServices,
+  SecurityService,
+  SessionService,
+  UserService,
+} from "./services.ts";
+export type { AuthzObject, AuthzRelation, PluginAuthz } from "./authz.ts";
+export type {
+  DuneConfig,
+  LanguageConfig,
+  SiteConfig,
+  SystemConfig,
+  ThemeConfig,
+} from "./config.ts";
+export type {
+  AdminPrefix,
+  AuthenticateResult,
+  Capabilities,
+  CapabilityContext,
+  CapabilityFactory,
+  CapabilityProvider,
+  CapabilityReader,
+  CapabilityRegistrar,
+  Contributions,
+  RequestAuthenticator,
+  ScheduledActionExecutor,
+} from "./capabilities.ts";
+export type {
+  AdminBarAction,
+  AdminBarActionContext,
+  AdminPageRegistration,
+  AdminRouteRegistration,
+  ContentEditorPlugin,
+  DunePlugin,
+  FormSubmitPayload,
+  HookContext,
+  HookEvent,
+  HookHandler,
+  HookRegistry,
+  MountApi,
+  PageMovePayload,
+  PluginApi,
+  PublicRouteRegistration,
+  ResponseTransformContext,
+  SystemActionPayload,
+} from "./hooks.ts";
+export type {
+  FlexEngine,
+  FlexRecord,
+  FlexSchema,
+  JobScheduler,
+  JobState,
+  LatencyStats,
+  LoadedTemplate,
+  MetricsCollector,
+  MetricsSnapshot,
+  Page,
+  PluginEngine,
+  PluginRuntime,
+  PluginSearch,
+  RouteResolver,
+  SectionDef,
+  SectionField,
+  SectionRegistry,
+  SubmissionManager,
+  ThemeLoader,
+} from "./runtime.ts";
