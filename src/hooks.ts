@@ -146,58 +146,6 @@ export interface PublicRouteRegistration {
   island?: string;
 }
 
-/** Context passed to a `bar.actions` contribution. */
-export interface AdminBarActionContext {
-  /** Content page matching the current URL, or null for non-content routes. */
-  page: {
-    sourcePath: string;
-    route: string;
-    title: string | null;
-    template: string;
-  } | null;
-  /** Admin panel URL prefix (e.g. `"/admin"`). */
-  adminPrefix: string;
-}
-
-/** A button contributed to the shared admin bar through the `bar.actions` point. */
-export interface AdminBarAction {
-  /** Unique id; namespace by plugin name, e.g. `"pdf-export:download"`. */
-  id: string;
-  label: string;
-  icon?: string;
-  /** Renders as a link when set; takes precedence over `onClick`. */
-  href?: string;
-  /** Literal JavaScript run on click when `href` is not set. Trusted plugin content. */
-  onClick?: string;
-}
-
-/** A custom admin page contributed through the `admin.pages` point. */
-// deno-lint-ignore no-explicit-any
-export interface AdminPageRegistration<S = any> {
-  /** URL path relative to the admin prefix (must start with `/`). */
-  path: string;
-  /** Human-readable nav label shown in the admin sidebar. */
-  label: string;
-  icon?: string;
-  /** Admin permission required to view this page. */
-  permission: string;
-  /** GET handler for the page. */
-  handler(ctx: PluginRouteContext<S>): Promise<Response> | Response;
-}
-
-/** A guarded admin route contributed through the `admin.routes` point. */
-// deno-lint-ignore no-explicit-any
-export interface AdminRouteRegistration<S = any> {
-  /** HTTP method. Anything other than `GET` is subject to the CSRF check. */
-  method: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
-  /** URL path relative to the admin prefix (must start with `/`). */
-  path: string;
-  /** Admin permission required, including ones declared through `authzActions`. */
-  permission: string;
-  /** Runs only after authentication, CSRF and permission checks pass. */
-  handler(ctx: PluginRouteContext<S>): Promise<Response> | Response;
-}
-
 /**
  * Plugin definition. Export it as the default export of your plugin module.
  *
@@ -255,17 +203,6 @@ export interface DunePlugin {
   ): Promise<Response> | Response;
 }
 
-/** Plugin-provided replacement for the built-in block editor (the `editor.content` slot). */
-export interface ContentEditorPlugin {
-  /** Handle `GET /admin/pages/edit?path=...`. */
-  pageEditorHandler(ctx: PluginRouteContext): Response | Promise<Response>;
-  /** Optional WebSocket upgrade handler for real-time collaboration. */
-  wsHandler?: (
-    req: Request,
-    user: { id: string; name: string },
-  ) => Response;
-}
-
 /** Context passed to {@link DunePlugin.transformResponse}. */
 export interface ResponseTransformContext {
   req: Request;
@@ -289,10 +226,13 @@ export interface ResponseTransformContext {
     title: string | null;
     template: string;
   } | null;
-  /** Admin panel URL prefix (e.g. `"/admin"`). */
-  adminPrefix: string;
-  /** Bar buttons contributed through `bar.actions`, in plugin registration order. */
-  barActions: readonly ((ctx: AdminBarActionContext) => AdminBarAction[])[];
+  /**
+   * What plugins provide, as `MountApi.capabilities` offers it: slots such as
+   * `get("admin.prefix")` and any extension point a plugin declares, such as
+   * `list("bar.actions")`. Read per request, so a plugin module shared between
+   * sites keeps no state of its own.
+   */
+  capabilities: import("./capabilities.ts").CapabilityReader;
 }
 
 /** What a plugin's `mount()` receives. */

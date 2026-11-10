@@ -38,11 +38,18 @@ Slice 2b (the plugin object, hooks, capabilities and the runtime):
 
 - `DunePlugin`, `PluginApi`, `MountApi`, `HookRegistry`, `HookContext`,
   `HookHandler`, `HookEvent` and the event payloads, `ResponseTransformContext`,
-  `ContentEditorPlugin`, `PublicRouteRegistration` and the admin registrations
-  (`AdminPageRegistration`, `AdminRouteRegistration`, `AdminBarAction`,
-  `AdminBarActionContext`). `HookHandler`, `setup`, `mount` and
+  `PublicRouteRegistration`. `HookHandler`, `setup`, `mount` and
   `transformResponse` are bivariant: core hands handlers a wider context than
   this package declares.
+- Extension points belong to the plugin that reads them (#127). The admin's
+  `AdminPageRegistration`, `AdminRouteRegistration` and `ContentEditorPlugin`
+  (and the keys `admin.pages`, `admin.routes`, `admin.editor`) are declared by
+  `@dune/plugin-admin`; the bar's `BarAction`, `BarActionContext` and
+  `bar.actions` by `@dune/plugin-inline-edit`. They extend `Capabilities` and
+  `Contributions` by declaration merging, which this package supports and keys
+  by the consuming plugin's name (`admin.*`, `bar.*`); unprefixed names are the
+  contract's. `ResponseTransformContext` carries `capabilities` (the reader
+  `MountApi` offers) instead of `adminPrefix` and `barActions`.
 - Capabilities: `Capabilities` (slots), `Contributions`, `CapabilityContext`,
   `CapabilityFactory`, `CapabilityRegistrar`, `CapabilityReader`,
   `CapabilityProvider`, `RequestAuthenticator`, `ScheduledActionExecutor`.

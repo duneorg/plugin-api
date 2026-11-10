@@ -132,11 +132,6 @@ export type {
   ScheduledActionExecutor,
 } from "./capabilities.ts";
 export type {
-  AdminBarAction,
-  AdminBarActionContext,
-  AdminPageRegistration,
-  AdminRouteRegistration,
-  ContentEditorPlugin,
   DunePlugin,
   FormSubmitPayload,
   HookContext,
