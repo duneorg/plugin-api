@@ -45,14 +45,17 @@ Slice 2b (the plugin object, hooks, capabilities and the runtime):
   `AdminPageRegistration`, `AdminRouteRegistration` and `ContentEditorPlugin`
   (and the keys `admin.pages`, `admin.routes`, `admin.editor`) are declared by
   `@dune/plugin-admin`; the bar's `BarAction`, `BarActionContext` and
-  `bar.actions` by `@dune/plugin-inline-edit`. They extend `Capabilities` and
-  `Contributions` by declaration merging, which this package supports and keys
-  by the consuming plugin's name (`admin.*`, `bar.*`); unprefixed names are the
-  contract's. `ResponseTransformContext` carries `capabilities` (the reader
-  `MountApi` offers) instead of `adminPrefix` and `barActions`.
-- Capabilities: `Capabilities` (slots), `Contributions`, `CapabilityContext`,
-  `CapabilityFactory`, `CapabilityRegistrar`, `CapabilityReader`,
-  `CapabilityProvider`, `RequestAuthenticator`, `ScheduledActionExecutor`.
+  `bar.actions` by `@dune/plugin-inline-edit`, as typed keys made with
+  `capabilityKey<T>(name)` and named after the consuming plugin (`admin.*`,
+  `bar.*`); unprefixed names are the contract's. `provide`, `contribute`, `get`
+  and `list` accept a key. There is no module augmentation, so `Contributions`
+  is gone and `Capabilities` is closed. `ResponseTransformContext` carries
+  `capabilities` (the reader `MountApi` offers) instead of `adminPrefix` and
+  `barActions`.
+- Capabilities: `Capabilities` (slots), `CapabilityKey`, `capabilityKey`,
+  `CapabilityContext`, `CapabilityFactory`, `CapabilityRegistrar`,
+  `CapabilityReader`, `CapabilityProvider`, `RequestAuthenticator`,
+  `ScheduledActionExecutor`.
 - A narrow `DuneConfig` (`site`, `system.content.dir`, `system.languages`,
   `system.debug`, `theme.name`, `plugins`); `admin` config is not part of it.
 - `AuthzRelation` and a structural `PluginAuthz` (`check`, `allow`,
@@ -79,3 +82,9 @@ Meilisearch plugin). Core's own types carry the omitted fields.
 Slot added: `admin.prefix` (`AdminPrefix { readonly prefix: string }`), where
 the admin is mounted. The admin provides it; core reads it instead of assuming
 `/admin`. With no provider there is no admin.
+
+- `InlineEditManager` gains
+  `handleRequest(req, { editor, path, pageFrontmatter })` and loses `commit` /
+  `patchFields`; `EditorIdentity` and `InlineEditRequestContext` are declared.
+  Page-event payloads (`onPageMove`'s `PageMovePayload`, and the others by
+  documentation) carry an optional `actor`.

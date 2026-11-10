@@ -31,7 +31,9 @@ export type {
 export type {
   ActiveEditor,
   DocumentPresence,
+  EditorIdentity,
   InlineEditManager,
+  InlineEditRequestContext,
 } from "./inline-edit.ts";
 export type {
   ContentFormat,
@@ -60,6 +62,7 @@ export type {
   WorkflowStage,
   WorkflowTransition,
 } from "./workflow.ts";
+export { capabilityKey } from "./capabilities.ts";
 export { type DuneErrorCode, isDuneError } from "./errors.ts";
 export type {
   ContentDiff,
@@ -124,10 +127,10 @@ export type {
   Capabilities,
   CapabilityContext,
   CapabilityFactory,
+  CapabilityKey,
   CapabilityProvider,
   CapabilityReader,
   CapabilityRegistrar,
-  Contributions,
   RequestAuthenticator,
   ScheduledActionExecutor,
 } from "./capabilities.ts";
