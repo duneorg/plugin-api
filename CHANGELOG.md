@@ -1,9 +1,11 @@
 # Changelog
 
-## 1.0.0 (unreleased, in progress)
+## 1.0.0 (2026-11-10)
 
-Declared so far (slice 1, the parts that do not depend on the plugin object
-itself):
+First release: the plugin contract of Dune 0.36. It was declared in slices; this
+is the full list.
+
+Slice 1 (the parts that do not depend on the plugin object itself):
 
 - `PluginApp`, `PluginRouteContext`: the structural app and route-context types,
   free of any web-framework type.
