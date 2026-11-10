@@ -88,3 +88,6 @@ the admin is mounted. The admin provides it; core reads it instead of assuming
   `patchFields`; `EditorIdentity` and `InlineEditRequestContext` are declared.
   Page-event payloads (`onPageMove`'s `PageMovePayload`, and the others by
   documentation) carry an optional `actor`.
+- `EditorIdentity.relation` (`admin` | `editor` | `author`): the admin-tier
+  relation core decided for the editor from the site's role grants, for
+  providers that apply an ownership rule.
