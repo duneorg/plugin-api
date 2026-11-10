@@ -46,8 +46,8 @@ Slice 2b (the plugin object, hooks, capabilities and the runtime):
   (and the keys `admin.pages`, `admin.routes`, `admin.editor`) are declared by
   `@dune/plugin-admin`; the bar's `BarAction`, `BarActionContext` and
   `bar.actions` by `@dune/plugin-inline-edit`. They extend `Capabilities` and
-  `Contributions` by declaration merging, which this package supports and keys by
-  the consuming plugin's name (`admin.*`, `bar.*`); unprefixed names are the
+  `Contributions` by declaration merging, which this package supports and keys
+  by the consuming plugin's name (`admin.*`, `bar.*`); unprefixed names are the
   contract's. `ResponseTransformContext` carries `capabilities` (the reader
   `MountApi` offers) instead of `adminPrefix` and `barActions`.
 - Capabilities: `Capabilities` (slots), `Contributions`, `CapabilityContext`,
