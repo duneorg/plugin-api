@@ -9,3 +9,13 @@ Deno.test("isDuneError tells an error by its code, not its class", () => {
   assertEquals(isDuneError("ssrf_blocked", "ssrf_blocked"), false);
   assertEquals(isDuneError(null, "ssrf_blocked"), false);
 });
+
+import { capabilityKey } from "../src/mod.ts";
+
+Deno.test("a capability key is its name; two keys with one name are one capability", () => {
+  assertEquals(capabilityKey("bar.actions"), { name: "bar.actions" });
+  assertEquals(
+    capabilityKey<number>("x").name,
+    capabilityKey<string>("x").name,
+  );
+});
