@@ -136,6 +136,14 @@ export interface SessionManager {
   revoke(sessionId: string): Promise<void>;
   /** Revoke all sessions for a user. */
   revokeAll(userId: string): Promise<void>;
+  /**
+   * The user's live (unexpired) sessions, newest first. A session's `id` is the
+   * bearer credential in its cookie, so never render it in a page: show a
+   * derived handle and look the session up again server-side to act on it.
+   */
+  listForUser(userId: string): Promise<Session[]>;
+  /** Revoke all of a user's sessions except `keepSessionId` (the caller's own). */
+  revokeOthers(userId: string, keepSessionId: string): Promise<void>;
   /** Clean up expired sessions. */
   cleanup(): Promise<number>;
 }
