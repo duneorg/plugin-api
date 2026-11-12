@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.1.0 (2026-11-12)
 
 - `SessionManager.listForUser(userId)` and
   `SessionManager.revokeOthers(userId, keepSessionId)`: list a user's live
