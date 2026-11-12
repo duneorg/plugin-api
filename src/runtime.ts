@@ -89,7 +89,13 @@ export interface MediaFile {
 /** Loads templates, layouts and locale strings from a theme. */
 export interface ThemeLoader {
   /** The active theme as resolved from disk. */
-  readonly theme: { readonly manifest: ThemeManifest };
+  readonly theme: {
+    readonly manifest: ThemeManifest;
+    /** Template names the theme provides. */
+    readonly templateNames: readonly string[];
+    /** Layout names the theme provides. */
+    readonly layoutNames: readonly string[];
+  };
   resolveTemplateName(page: Page): string | null;
   loadTemplate(name: string): Promise<LoadedTemplate | null>;
   loadLayout(name: string): Promise<unknown | null>;

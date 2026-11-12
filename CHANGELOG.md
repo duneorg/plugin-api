@@ -19,9 +19,9 @@ additive.
   `SiteConfig.workflow`, `LanguageConfig.rtl_override`,
   `SystemConfig.trusted_proxies`, `.metrics`, `.page_cache`, and
   `DuneConfig.pluginList`.
-- `Page.media` (`MediaFile`), `ThemeLoader.theme.manifest` (`ThemeManifest`),
-  `SiteConfig.author` and `SiteConfig.metadata`: what the admin read from core's
-  engine types. Core provides all of them.
+- `Page.media` (`MediaFile`), `ThemeLoader.theme` (`manifest`, `templateNames`,
+  `layoutNames`), `SiteConfig.author` and `SiteConfig.metadata`: what the admin
+  read from core's engine types. Core provides all of them.
 - `PluginEngine.getAvailableThemes()`. Implementations of `PluginEngine` must
   add it (core's does).
 
