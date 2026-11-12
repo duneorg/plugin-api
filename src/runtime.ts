@@ -87,6 +87,8 @@ export interface PluginEngine {
    * `onThemeSwitch` and rebuilds. Does not persist the choice to disk.
    */
   switchTheme(name: string): Promise<void>;
+  /** Names of the themes available to switch to. */
+  getAvailableThemes(): Promise<string[]>;
   /** A loader for a theme other than the active one, for previews. */
   createPreviewTheme(name: string): Promise<ThemeLoader>;
 }

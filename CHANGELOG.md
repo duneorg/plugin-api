@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.2.0
+
+Lets first-party plugins stop importing `@dune/core` (duneorg/dune#161). All
+additive.
+
+- Content and URL helpers, one copy for every plugin that touches content files:
+  `parseContentFilename`, `dirPathToRoute`, `isMediaFile`, `getMimeType`,
+  `buildPageTitle`, `isRtl` (and the `ContentFileInfo` type). Core keeps its own
+  implementations and tests that they agree.
+- The admin-tier role ladder: `Role`, `ADMIN_ROLE_RANK`, `highestAdminRole`.
+- `SearchConfigError`: a search engine plugin throws it for a failure that will
+  not fix itself (a rejected API key). Core recognises it by `name`.
+- `PLUGIN_API_VERSION` (`"1.2"`): the contract's major.minor.
+- `PluginEngine.getAvailableThemes()`. Implementations of `PluginEngine` must
+  add it (core's does).
+
 ## 1.1.0 (2026-11-12)
 
 - `SessionManager.listForUser(userId)` and
