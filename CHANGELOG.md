@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- `SessionManager.listForUser(userId)` and
+  `SessionManager.revokeOthers(userId, keepSessionId)`: list a user's live
+  sessions and end all but one. Additive; for "sign out other sessions" in an
+  account page. Implementations of `SessionManager` must add both (core's does).
+
 ## 1.0.0 (2026-11-10)
 
 First release: the plugin contract of Dune 0.36. It was declared in slices; this
