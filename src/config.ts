@@ -17,6 +17,10 @@ export interface SiteConfig {
   url: string;
   /** Taxonomy names declared for the site (e.g. `["category", "tag"]`). */
   taxonomies: string[];
+  /** Feed generation settings (`enabled` defaults to true). */
+  feed?: { enabled?: boolean };
+  /** The editorial workflow, when the site defines one. */
+  workflow?: unknown;
 }
 
 /** The active theme. */
@@ -30,6 +34,8 @@ export interface LanguageConfig {
   supported: string[];
   default: string;
   include_default_in_url: boolean;
+  /** Extra language codes to treat as right-to-left (`isRtl`'s `extra`). */
+  rtl_override?: string[];
 }
 
 /** Engine behaviour a plugin may depend on. */
@@ -45,6 +51,12 @@ export interface SystemConfig {
   };
   languages: LanguageConfig;
   debug: boolean;
+  /** True when the site runs behind a trusted reverse proxy (`X-Forwarded-For` is honoured). */
+  trusted_proxies?: boolean;
+  /** Metrics collection (`enabled` defaults to true). */
+  metrics?: { enabled?: boolean };
+  /** The rendered-page cache (`enabled` defaults to false). */
+  page_cache?: { enabled?: boolean };
 }
 
 /** The loaded site configuration, as a plugin sees it. Read-only. */
@@ -54,4 +66,6 @@ export interface DuneConfig {
   theme: ThemeConfig;
   /** Per-plugin settings, keyed by plugin name. */
   plugins: Record<string, Record<string, unknown>>;
+  /** The plugin entries listed in `site.yaml` (`{ src, config? }`), for introspection. */
+  pluginList?: readonly unknown[];
 }

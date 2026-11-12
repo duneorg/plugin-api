@@ -15,6 +15,10 @@ additive.
 - `PLUGIN_API_VERSION` (`"1.2"`): the contract's major.minor.
 - `SystemConfig.content.allow_tsx_format` (optional): the roles allowed to save
   TSX pages.
+- Optional config fields the admin reads: `SiteConfig.feed`,
+  `SiteConfig.workflow`, `LanguageConfig.rtl_override`,
+  `SystemConfig.trusted_proxies`, `.metrics`, `.page_cache`, and
+  `DuneConfig.pluginList`.
 - `PluginEngine.getAvailableThemes()`. Implementations of `PluginEngine` must
   add it (core's does).
 
