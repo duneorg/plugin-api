@@ -13,6 +13,8 @@ additive.
 - `SearchConfigError`: a search engine plugin throws it for a failure that will
   not fix itself (a rejected API key). Core recognises it by `name`.
 - `PLUGIN_API_VERSION` (`"1.2"`): the contract's major.minor.
+- `SystemConfig.content.allow_tsx_format` (optional): the roles allowed to save
+  TSX pages.
 - `PluginEngine.getAvailableThemes()`. Implementations of `PluginEngine` must
   add it (core's does).
 

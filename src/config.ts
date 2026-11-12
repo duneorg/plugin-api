@@ -37,6 +37,11 @@ export interface SystemConfig {
   content: {
     /** Content directory relative to the site root. */
     dir: string;
+    /**
+     * Roles permitted to create or save pages with `format: tsx` (default
+     * `["admin"]`; `[]` disables TSX content).
+     */
+    allow_tsx_format?: string[];
   };
   languages: LanguageConfig;
   debug: boolean;
