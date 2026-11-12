@@ -17,6 +17,10 @@ export interface SiteConfig {
   url: string;
   /** Taxonomy names declared for the site (e.g. `["category", "tag"]`). */
   taxonomies: string[];
+  /** The site's author (`name`; `email` is optional). */
+  author: { name: string; email?: string };
+  /** Free-form `<meta>` entries from `site.yaml`. */
+  metadata: Record<string, string>;
   /** Feed generation settings (`enabled` defaults to true). */
   feed?: { enabled?: boolean };
   /** The editorial workflow, when the site defines one. */

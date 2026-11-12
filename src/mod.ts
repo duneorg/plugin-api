@@ -176,6 +176,7 @@ export type {
   JobState,
   LatencyStats,
   LoadedTemplate,
+  MediaFile,
   MetricsCollector,
   MetricsSnapshot,
   Page,
@@ -188,4 +189,5 @@ export type {
   SectionRegistry,
   SubmissionManager,
   ThemeLoader,
+  ThemeManifest,
 } from "./runtime.ts";
