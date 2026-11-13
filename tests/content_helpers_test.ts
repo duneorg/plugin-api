@@ -8,6 +8,7 @@ import {
   isDuneError,
   isMediaFile,
   isRtl,
+  MIN_CORE_VERSION,
   parseContentFilename,
   PLUGIN_API_VERSION,
   SearchConfigError,
@@ -89,4 +90,8 @@ Deno.test("PLUGIN_API_VERSION tracks deno.json's major.minor", () => {
     PLUGIN_API_VERSION,
     denoJson.version.split(".").slice(0, 2).join("."),
   );
+});
+
+Deno.test("MIN_CORE_VERSION is a readable version", () => {
+  assertEquals(/^\d+\.\d+\.\d+$/.test(MIN_CORE_VERSION), true);
 });

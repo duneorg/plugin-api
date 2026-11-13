@@ -176,6 +176,13 @@ export interface DunePlugin {
   version: string;
   description?: string;
   author?: string;
+  /**
+   * The oldest `@dune/core` this plugin runs on, as a version (`"0.37.0"`).
+   * Set it to {@link MIN_CORE_VERSION} so it follows the contract version the
+   * plugin was built against; core skips the plugin with a message on an older
+   * core instead of letting it fail at runtime.
+   */
+  requiresCore?: string;
   /** Lifecycle hook subscriptions, called in registration order. */
   hooks: Partial<Record<HookEvent, HookHandler>>;
   /** Blueprint-style config schema for the plugin's own settings. */
