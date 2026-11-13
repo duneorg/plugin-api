@@ -8,9 +8,10 @@ Additive.
 - `MIN_CORE_VERSION` (`"0.37.0"`): the oldest `@dune/core` that implements this
   version of the contract. It is raised in any release that adds something core
   must provide, and left alone for types, helpers and optional fields.
-- `DunePlugin.requiresCore` (optional): the oldest core the plugin runs on. Set
-  it to `MIN_CORE_VERSION`. Core 0.37.1 and later skip a plugin on an older core
-  and log why; earlier cores ignore the field.
+- `DunePlugin.requiresCore` (optional): how a plugin passes the contract's
+  minimum core to core. Always set it to `MIN_CORE_VERSION`; the number belongs
+  to the contract version, not to the plugin. Core 0.37.1 and later skip a
+  plugin on an older core and log why; earlier cores ignore the field.
 - `PLUGIN_API_VERSION` is `"1.3"`.
 
 ## 1.2.0 (2026-11-13)
