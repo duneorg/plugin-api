@@ -63,7 +63,27 @@ export type {
   WorkflowTransition,
 } from "./workflow.ts";
 export { capabilityKey } from "./capabilities.ts";
-export { type DuneErrorCode, isDuneError } from "./errors.ts";
+export {
+  type DuneErrorCode,
+  isDuneError,
+  SearchConfigError,
+} from "./errors.ts";
+export {
+  buildPageTitle,
+  type ContentFileInfo,
+  dirPathToRoute,
+  getMimeType,
+  isMediaFile,
+  isRtl,
+  parseContentFilename,
+} from "./content-helpers.ts";
+export { ADMIN_ROLE_RANK, highestAdminRole, type Role } from "./roles.ts";
+
+/**
+ * The contract's major.minor version. Bumped with every minor release of this
+ * package (a test keeps it in step with `deno.json`).
+ */
+export const PLUGIN_API_VERSION = "1.2";
 export type {
   ContentDiff,
   ContentRevision,
@@ -156,6 +176,7 @@ export type {
   JobState,
   LatencyStats,
   LoadedTemplate,
+  MediaFile,
   MetricsCollector,
   MetricsSnapshot,
   Page,
@@ -168,4 +189,5 @@ export type {
   SectionRegistry,
   SubmissionManager,
   ThemeLoader,
+  ThemeManifest,
 } from "./runtime.ts";

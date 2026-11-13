@@ -21,3 +21,12 @@ export function isDuneError(err: unknown, code: DuneErrorCode): boolean {
   return typeof err === "object" && err !== null &&
     (err as { code?: unknown }).code === code;
 }
+
+/**
+ * Thrown by a search engine plugin for a failure that will not fix itself, such
+ * as a rejected API key. Core stops retrying and says so at startup. Core
+ * recognises it by `name`, so it works across two copies of this package.
+ */
+export class SearchConfigError extends Error {
+  override name = "SearchConfigError";
+}

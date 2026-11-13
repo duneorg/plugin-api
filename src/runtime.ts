@@ -38,6 +38,8 @@ export interface Page {
   frontmatter: PageFrontmatter;
   /** Raw body, or null for formats that have none. */
   rawContent: string | null;
+  /** Co-located media files. */
+  media: MediaFile[];
   /** Render the page body to HTML. */
   html(): Promise<string>;
 }
@@ -55,8 +57,45 @@ export interface LoadedTemplate {
   component: unknown;
 }
 
+/** A theme's `theme.yaml`. */
+export interface ThemeManifest {
+  /** Theme name (its directory name). */
+  name: string;
+  /** Parent theme for inheritance. */
+  parent?: string;
+  description?: string;
+  author?: string;
+  version?: string;
+  /** User-configurable settings (`config_schema`), edited in the admin and stored in `data/theme-config.json`. */
+  configSchema?: Record<string, BlueprintField>;
+}
+
+/** A co-located media file of a page. */
+export interface MediaFile {
+  /** Filename, e.g. `cover.jpg`. */
+  name: string;
+  /** Path relative to the content root. */
+  path: string;
+  /** MIME type. */
+  type: string;
+  /** Size in bytes. */
+  size: number;
+  /** Sidecar metadata (`.meta.yaml`). */
+  meta: Record<string, unknown>;
+  /** URL that serves the file. */
+  url: string;
+}
+
 /** Loads templates, layouts and locale strings from a theme. */
 export interface ThemeLoader {
+  /** The active theme as resolved from disk. */
+  readonly theme: {
+    readonly manifest: ThemeManifest;
+    /** Template names the theme provides. */
+    readonly templateNames: readonly string[];
+    /** Layout names the theme provides. */
+    readonly layoutNames: readonly string[];
+  };
   resolveTemplateName(page: Page): string | null;
   loadTemplate(name: string): Promise<LoadedTemplate | null>;
   loadLayout(name: string): Promise<unknown | null>;
@@ -87,6 +126,8 @@ export interface PluginEngine {
    * `onThemeSwitch` and rebuilds. Does not persist the choice to disk.
    */
   switchTheme(name: string): Promise<void>;
+  /** Names of the themes available to switch to. */
+  getAvailableThemes(): Promise<string[]>;
   /** A loader for a theme other than the active one, for previews. */
   createPreviewTheme(name: string): Promise<ThemeLoader>;
 }

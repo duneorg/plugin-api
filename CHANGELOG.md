@@ -1,5 +1,36 @@
 # Changelog
 
+## 1.2.0
+
+Lets first-party plugins stop importing `@dune/core` (duneorg/dune#161).
+
+Additive for code that **reads** these types. Code that **builds or mocks** them
+(test doubles in plugin tests, fixtures) must add the new required members
+before it type-checks again: `Page.media`, `ThemeLoader.theme`,
+`SiteConfig.author`, `SiteConfig.metadata` and
+`PluginEngine.getAvailableThemes()`. Everything else below is a new export or an
+optional field.
+
+- Content and URL helpers, one copy for every plugin that touches content files:
+  `parseContentFilename`, `dirPathToRoute`, `isMediaFile`, `getMimeType`,
+  `buildPageTitle`, `isRtl` (and the `ContentFileInfo` type). Core keeps its own
+  implementations and tests that they agree.
+- The admin-tier role ladder: `Role`, `ADMIN_ROLE_RANK`, `highestAdminRole`.
+- `SearchConfigError`: a search engine plugin throws it for a failure that will
+  not fix itself (a rejected API key). Core recognises it by `name`.
+- `PLUGIN_API_VERSION` (`"1.2"`): the contract's major.minor.
+- `SystemConfig.content.allow_tsx_format` (optional): the roles allowed to save
+  TSX pages.
+- Optional config fields the admin reads: `SiteConfig.feed`,
+  `SiteConfig.workflow`, `LanguageConfig.rtl_override`,
+  `SystemConfig.trusted_proxies`, `.metrics`, `.page_cache`, and
+  `DuneConfig.pluginList`.
+- **Required members** (core provides all of them): `Page.media`
+  (`MediaFile[]`), `ThemeLoader.theme` (`manifest`, `templateNames`,
+  `layoutNames`), `SiteConfig.author` (`{ name, email? }`),
+  `SiteConfig.metadata` (`Record<string, string>`) and
+  `PluginEngine.getAvailableThemes()`. New types: `MediaFile`, `ThemeManifest`.
+
 ## 1.1.0 (2026-11-12)
 
 - `SessionManager.listForUser(userId)` and
