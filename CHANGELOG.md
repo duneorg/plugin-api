@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.2.0
+## 1.2.0 (2026-11-13)
 
 Lets first-party plugins stop importing `@dune/core` (duneorg/dune#161).
 
