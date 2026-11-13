@@ -2,8 +2,14 @@
 
 ## 1.2.0
 
-Lets first-party plugins stop importing `@dune/core` (duneorg/dune#161). All
-additive.
+Lets first-party plugins stop importing `@dune/core` (duneorg/dune#161).
+
+Additive for code that **reads** these types. Code that **builds or mocks** them
+(test doubles in plugin tests, fixtures) must add the new required members
+before it type-checks again: `Page.media`, `ThemeLoader.theme`,
+`SiteConfig.author`, `SiteConfig.metadata` and
+`PluginEngine.getAvailableThemes()`. Everything else below is a new export or an
+optional field.
 
 - Content and URL helpers, one copy for every plugin that touches content files:
   `parseContentFilename`, `dirPathToRoute`, `isMediaFile`, `getMimeType`,
@@ -19,11 +25,11 @@ additive.
   `SiteConfig.workflow`, `LanguageConfig.rtl_override`,
   `SystemConfig.trusted_proxies`, `.metrics`, `.page_cache`, and
   `DuneConfig.pluginList`.
-- `Page.media` (`MediaFile`), `ThemeLoader.theme` (`manifest`, `templateNames`,
-  `layoutNames`), `SiteConfig.author` and `SiteConfig.metadata`: what the admin
-  read from core's engine types. Core provides all of them.
-- `PluginEngine.getAvailableThemes()`. Implementations of `PluginEngine` must
-  add it (core's does).
+- **Required members** (core provides all of them): `Page.media`
+  (`MediaFile[]`), `ThemeLoader.theme` (`manifest`, `templateNames`,
+  `layoutNames`), `SiteConfig.author` (`{ name, email? }`),
+  `SiteConfig.metadata` (`Record<string, string>`) and
+  `PluginEngine.getAvailableThemes()`. New types: `MediaFile`, `ThemeManifest`.
 
 ## 1.1.0 (2026-11-12)
 
