@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.3.0
+
+Closes the gap between a plugin and the core it runs on (duneorg/dune#161).
+Additive.
+
+- `MIN_CORE_VERSION` (`"0.37.0"`): the oldest `@dune/core` that implements this
+  version of the contract. It is raised in any release that adds something core
+  must provide, and left alone for types, helpers and optional fields.
+- `DunePlugin.requiresCore` (optional): how a plugin passes the contract's
+  minimum core to core. Always set it to `MIN_CORE_VERSION`; the number belongs
+  to the contract version, not to the plugin. Core 0.37.1 and later skip a
+  plugin on an older core and log why; earlier cores ignore the field.
+- `PLUGIN_API_VERSION` is `"1.3"`.
+
 ## 1.2.0 (2026-11-13)
 
 Lets first-party plugins stop importing `@dune/core` (duneorg/dune#161).

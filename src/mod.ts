@@ -83,7 +83,16 @@ export { ADMIN_ROLE_RANK, highestAdminRole, type Role } from "./roles.ts";
  * The contract's major.minor version. Bumped with every minor release of this
  * package (a test keeps it in step with `deno.json`).
  */
-export const PLUGIN_API_VERSION = "1.2";
+export const PLUGIN_API_VERSION = "1.3";
+
+/**
+ * The oldest `@dune/core` that implements everything in this version of the
+ * contract. A plugin sets `DunePlugin.requiresCore` to it; core refuses the
+ * plugin on anything older. It is raised in any release that adds something
+ * core must provide (a required member, a new service), and left alone for a
+ * release that only adds types, helpers or optional fields.
+ */
+export const MIN_CORE_VERSION = "0.37.0";
 export type {
   ContentDiff,
   ContentRevision,
