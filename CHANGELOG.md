@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.3.0
+## 1.3.0 (2026-11-14)
 
 Closes the gap between a plugin and the core it runs on (duneorg/dune#161).
 Additive.
