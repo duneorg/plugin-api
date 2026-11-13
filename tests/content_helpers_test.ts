@@ -12,6 +12,7 @@ import {
   PLUGIN_API_VERSION,
   SearchConfigError,
 } from "../src/mod.ts";
+import denoJson from "../deno.json" with { type: "json" };
 
 Deno.test("parseContentFilename: template, format and language", () => {
   assertEquals(parseContentFilename("default.md"), {
@@ -83,12 +84,9 @@ Deno.test("SearchConfigError is recognisable by name", () => {
   assertStrictEquals(isDuneError(e, "weak_password"), false);
 });
 
-Deno.test("PLUGIN_API_VERSION tracks deno.json's major.minor", async () => {
-  const cfg = JSON.parse(
-    await Deno.readTextFile(new URL("../deno.json", import.meta.url)),
-  );
+Deno.test("PLUGIN_API_VERSION tracks deno.json's major.minor", () => {
   assertEquals(
     PLUGIN_API_VERSION,
-    cfg.version.split(".").slice(0, 2).join("."),
+    denoJson.version.split(".").slice(0, 2).join("."),
   );
 });
